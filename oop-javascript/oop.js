@@ -4,15 +4,15 @@ let value;
 const programmer = {
     name: "john doe",
     age: 25,
-    email:"john.doe@example.com",
-    langs: ["python","php","java","javascript"],
+    email: "john.doe@example.com",
+    langs: ["python", "php", "java", "javascript"],
     //obje içierisinde obje tanımlayabiliriz
     adress: {
         city: "Ankara",
         street: "etimesgut"
     },
     // obje içerisinde metod tanımlayabiliriz
-    work: function(){
+    work: function () {
         console.log("Programcı Çalışıyor...");
     }
 
@@ -53,9 +53,59 @@ date1.setSeconds(00);
 
 value = date1;
 
+console.log(value);
+
 //WINDOW OBJECT
+//Javascript en genel objedir burada sadece birkaç metod kullanımına bakıyoruz
 
+//alert("Merhaba");
 
+//value = confirm("Bu bir confirm");
+
+if (value) {
+    console.log("tamam seçildi");
+} else {
+    console.log("iptal seçildi");
+}
+
+//value = prompt("2 + 2 = ?");
+
+if (value == 4) {
+    console.log("Doğru");
+} else {
+    console.log("Yanlış");
+}
+
+value = window;
+value = window.location;
+value = window.location.host;
+value = window.location.host.name;
+value = window.location.port;
+value = window.location.href;
+
+/*
+if (confirm("Sayfa Yenilensin mi?")) {
+    window.location.reload();
+} else {
+    console.log("Sayfa yenilenemedi");
+}
+*/
+
+//tüm sekme boyutları
+value = window.outerHeight;
+value = window.outerWidth;
+
+//içeriğin göründüğü kısmın boyutları
+value = window.innerHeight;
+value = window.innerWidth;
+
+//içerik içinde oluşan scroll barın konumlarını verir
+value = window.scrollX;
+value = window.scrollY;
 
 console.log(value);
+
+
+
+
 
