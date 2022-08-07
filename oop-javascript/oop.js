@@ -1,5 +1,5 @@
 //OBJECT LITERAL
-let value;
+/*let value;
 //obje yazımı
 const programmer = {
     name: "john doe",
@@ -17,6 +17,7 @@ const programmer = {
     }
 
 }
+programmer.salary = 15000; //objeye yeni özellik ekleyebiliriz
 
 value = programmer;
 value = programmer.adress.city;
@@ -82,7 +83,7 @@ value = window.location.host;
 value = window.location.host.name;
 value = window.location.port;
 value = window.location.href;
-
+*/
 /*
 if (confirm("Sayfa Yenilensin mi?")) {
     window.location.reload();
@@ -91,6 +92,7 @@ if (confirm("Sayfa Yenilensin mi?")) {
 }
 */
 
+/*
 //tüm sekme boyutları
 value = window.outerHeight;
 value = window.outerWidth;
@@ -104,8 +106,133 @@ value = window.scrollX;
 value = window.scrollY;
 
 console.log(value);
+*/
+///------------------------------------------2.KISIM--------------------------------------------------------\\\
+
+//CONSTRUCTOR
+
+const emp1 = {
+    name:"Ahmet",
+    age:25
+}
+
+const emp2 = {
+    name:"Mehmet",
+    age:25
+}
+//tek tek obje oluşturmaktansa constructor kullanmak daha mantıklıdır
+
+function Employee(name,age,salary){
+    this.name = name;
+    this.age = age;
+    this.salary = salary;
+
+    this.showInfos = function(){
+        console.log(this.name,this.age,this.salary);
+    }
+}
+
+const emp3 = new Employee("Ahsen",25,10000);
+const emp4 = new Employee("Semih",25,15000);
+
+emp3.showInfos();
+
+//PROTOTYPE
+
+//Javascriptte nesneler prototype tabanlı oluşur yani en temel Object nesnesi aynı zamanda oluşan tüm nesnelerin sahip olduğu bir prototype tir
+//ve default bazı özellikler barındırır veya biz sonradan da ona özellikler ekleyebiliriz
+
+const myObj = {};
+console.log(myObj);
+
+// myObj nesnesinin prototype i
+// Object tir
+
+function Person(name,surname,age){
+    this.name = name;
+    this.surname = surname;
+    this.age = age;
+    this.fullname = function(){
+        return `${this.name} ${this.surname}`
+    } 
+}
+
+// myObj nesnesinin prototype i da Objecttir ama Person sadece Object'ten oluşmaz içerisinde bulundurduğu propertyleride kapsar
+//OBJECT + name + surname + age ----> Person
+// ama biz Person uapıcı metodundan bir nesne türetrisek bu sefer nesnenin prototype i Person olur Personun prototype da Object olur buna 
+// prototype chain yani prototip zinciri denir 
+
+const tokuc = new Person("Tokuç","Dog",1);
+Person.prototype.color = "Yellow"; 
+//bu şekilde nesnemizin prototype na yeni özellikler ekleyebiliriz
+console.log(tokuc.hasOwnProperty("color")); // bura false döner çünkü bu kendi özelliği değildir prototipten gelen bir özelliktir
+// ama nesnemiz özünde buna sahip olur
+
+//Birde yapıcı metotlarla üretilen her objede aynı ve değişmeyen property ve metodları biz 
+//constructor metodunun prototype na eklersek gereksiz yere bellek işgalinden kurtuluruz çünkü
+//bir Constructordan bir nesne ürettiğimiz zaman o constructorun propertylerynin hepsi için bir alan ayrılır 
+//ama biz prototype yazarsak tüm nesnelerimiz için yalnızca bir kere yer ayrılır bellekte
+
+//Örneğin yukarıdaki Person constructorına biz üretilen nesnenin tüm bilgilerini bastıran bir showInfos metodunu 
+//ekleyecek olalım bu metod her nesne için farklı çalışmayacak öyle ise bunu constructora değilde onun prototype na
+//ekleyelim ki sadece bir kere yer ayrılsın ama tüm nesnelerde kullanabilelim bunun mantığı prototype in sadece bir kere üretilmesidir
+
+Person.prototype.showInfos = function(){
+    console.log(`İsim:${this.name} Surname:${this.surname} Yaş:${this.age}`);
+}
+//artık bu metodu her nesne ortak olarak kullanabilecek
+
+tokuc.showInfos();
+
+console.log(tokuc);
 
 
+//Object.create()
 
+function Vehicle() {
+
+
+}
+
+Vehicle.prototype.test1 = function(){
+    console.log("test1");
+}
+Vehicle.prototype.test2 = function(){
+    console.log("test2");
+}
+
+const vehicle = new Vehicle();
+
+//Object.create() metodu oluşturacağımız objeyi başka bir objenin prototipini kullanarak oluşturmamızı sağlar
+//Kalıtım için kulanılır bu metodla oluşturulan objenin prototipi kendinden oluşturulan ata objemizi gösterir
+
+const truck = Object.create(vehicle);
+//Object ----> Vehicle -----> truck 
+truck.name = "Man";
+truck.year = "2020";
+
+console.log(truck);
+
+
+//Bir Nesnenin prototipini Başka bir nesnenin prototipine bağlayabiliriz 
+//yani aslında bir nesnenin özelliklerini başka bir nesneye prototip tabanlı kalıtabiliriz ve bunun
+//içinde Object.create() metodunu kullanırız Car nesnesin Vehicle nesnesin özelliklerini almasını sağlayalım
+
+
+function Car(name,model) {
+    this.name = name;
+    this.model = model;
+}
+
+Car.prototype = Object.create(Vehicle.prototype);
+
+const carObj = new Car("Nissan","R34 GT-R");
+
+console.log(carObj);
+
+Car.prototype.myTest = () => console.log("myTest Function");
+
+//Buradaki prototip zinciri önce carObj nesnesi sonra Car nesnesi sonra Vehicle nesnesi ve en son ve genel Object nesnesinin prototipidir 
+//bir property yi arama hiyerarşiside bu sırada işler
 
 
