@@ -235,4 +235,79 @@ Car.prototype.myTest = () => console.log("myTest Function");
 //Buradaki prototip zinciri önce carObj nesnesi sonra Car nesnesi sonra Vehicle nesnesi ve en son ve genel Object nesnesinin prototipidir 
 //bir property yi arama hiyerarşiside bu sırada işler
 
+//Call, Apply and Bind function
+
+const obj1 = {
+    number1: 10,
+    number2: 20
+}
+
+const obj2 = {
+    number1: 20,
+    number2: 30
+}
+//Bu fonksiyonlar normalde o özelliği sahip olmadığı için this i kullanamazken bu fonksiyonları 
+//kullanarak metotlara bir obje gönderip thisin işaret edeceği bir objeye sahip olmasını sağlar
+function addNumber(number3,number4) {
+    console.log(this.number1 + this.number2 + number3 + number4);
+}
+
+addNumber(100,200);
+addNumber.call(obj1,100,200);
+
+addNumber.apply(obj2,[100,200]);
+
+const bindFunction = addNumber.bind(obj2);
+bindFunction(100,200);
+
+//INHERITENCE
+
+function Animals(name,age){
+    this.name = name;
+    this.age = age;
+}
+
+Animals.prototype.showInfos = function(){
+    console.log("İsim: "+this.name+" Yaş: "+this.age);
+}
+
+const animal = new Animals("Kedi","1");
+animal.showInfos();
+
+function Dog(name,age,genus){
+    this.name = name;
+    this.age = age; 
+    this.genus = genus; 
+}
+
+function Cat(name,age,genus){
+    // this.name = name;
+    // this.age = age; 
+    Animals.call(this,name,age);//2.yöntem
+    //burada this Cat constructorunı işaret ediyor
+    this.genus = genus; 
+}
+
+Dog.prototype = Object.create(Animals.prototype);//1.yöntem
+//Animals prototypeni Dog prototype na bağlıyoruz yani prototip tabanlı kalıtım
+const dog = new Dog("Sarı",1,"Golden");
+
+//@Override
+Dog.prototype.showInfos = function(){
+    console.log("Ad: "+this.name+" Yaş: "+this.age+" Cins: "+this.genus);
+}
+dog.showInfos();
+console.log(dog);
+
+const cat = new Cat("Dişsiz",4,"Bombay");
+Cat.prototype.showInfos = function(){
+    console.log("Ad: "+this.name+" Yaş: "+this.age+" Cins: "+this.genus);
+};
+// Cat.prototype
+cat.showInfos();
+console.log(cat);
+//iki yöntem de kalıtım yapmak için kullanılabilir. Ama 2. yötem görüldüğü üzere daha basit
+
+
+
 
